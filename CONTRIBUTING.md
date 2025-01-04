@@ -42,15 +42,15 @@ If you’d like to use the repository from source, you can either install from g
 To install via git:
 
 ```sh
-$ npm install git+ssh://git@github.com:stainless-sdks/onederful-dentistry-api-test-node.git
+$ npm install git+ssh://git@github.com:onederful-dentistry-api/onederful-dentistry-api-test-nodejs.git
 ```
 
 Alternatively, to link a local copy of the repo:
 
 ```sh
 # Clone
-$ git clone https://www.github.com/stainless-sdks/onederful-dentistry-api-test-node
-$ cd onederful-dentistry-api-test-node
+$ git clone https://www.github.com/onederful-dentistry-api/onederful-dentistry-api-test-nodejs
+$ cd onederful-dentistry-api-test-nodejs
 
 # With yarn
 $ yarn link
