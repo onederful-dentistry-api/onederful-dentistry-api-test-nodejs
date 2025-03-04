@@ -6,7 +6,7 @@ This library provides convenient access to the Onederful Dentistry API Test REST
 
 The REST API documentation can be found on [docs.onederful-dentistry-api-test.com](https://docs.onederful-dentistry-api-test.com). The full API of this library can be found in [api.md](api.md).
 
-It is generated with [Stainless](https://www.stainlessapi.com/).
+It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
@@ -15,7 +15,7 @@ npm install git+ssh://git@github.com:onederful-dentistry-api/onederful-dentistry
 ```
 
 > [!NOTE]
-> Once this package is [published to npm](https://app.stainlessapi.com/docs/guides/publish), this will become: `npm install onederful-dentistry-api-test`
+> Once this package is [published to npm](https://app.stainless.com/docs/guides/publish), this will become: `npm install onederful-dentistry-api-test`
 
 ## Usage
 
@@ -28,14 +28,7 @@ import OnederfulDentistryAPITest from 'onederful-dentistry-api-test';
 const client = new OnederfulDentistryAPITest();
 
 async function main() {
-  const eligibility = await client.eligibilities.create({
-    body: {
-      subscriber: { first_name: 'TEST', last_name: 'PERSON', dob: '01/01/2011', member_id: '1234567890' },
-      provider: { npi: '1234567890' },
-      payer: { id: 'PRINCIPAL' },
-      version: 'v2',
-    },
-  });
+  const eligibility = await client.eligibilities.create();
 }
 
 main();
@@ -52,15 +45,7 @@ import OnederfulDentistryAPITest from 'onederful-dentistry-api-test';
 const client = new OnederfulDentistryAPITest();
 
 async function main() {
-  const params: OnederfulDentistryAPITest.EligibilityCreateParams = {
-    body: {
-      subscriber: { first_name: 'TEST', last_name: 'PERSON', dob: '01/01/2011', member_id: '1234567890' },
-      provider: { npi: '1234567890' },
-      payer: { id: 'PRINCIPAL' },
-      version: 'v2',
-    },
-  };
-  const eligibility: unknown = await client.eligibilities.create(params);
+  const eligibility: unknown = await client.eligibilities.create();
 }
 
 main();
@@ -77,24 +62,15 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const eligibility = await client.eligibilities
-    .create({
-      body: {
-        subscriber: { first_name: 'TEST', last_name: 'PERSON', dob: '01/01/2011', member_id: '1234567890' },
-        provider: { npi: '1234567890' },
-        payer: { id: 'PRINCIPAL' },
-        version: 'v2',
-      },
-    })
-    .catch(async (err) => {
-      if (err instanceof OnederfulDentistryAPITest.APIError) {
-        console.log(err.status); // 400
-        console.log(err.name); // BadRequestError
-        console.log(err.headers); // {server: 'nginx', ...}
-      } else {
-        throw err;
-      }
-    });
+  const eligibility = await client.eligibilities.create().catch(async (err) => {
+    if (err instanceof OnederfulDentistryAPITest.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 }
 
 main();
@@ -130,7 +106,7 @@ const client = new OnederfulDentistryAPITest({
 });
 
 // Or, configure per-request:
-await client.eligibilities.create({ body: { subscriber: { first_name: 'TEST', last_name: 'PERSON', dob: '01/01/2011', member_id: '1234567890' }, provider: { npi: '1234567890' }, payer: { id: 'PRINCIPAL' }, version: 'v2' } }, {
+await client.eligibilities.create({
   maxRetries: 5,
 });
 ```
@@ -148,7 +124,7 @@ const client = new OnederfulDentistryAPITest({
 });
 
 // Override per-request:
-await client.eligibilities.create({ body: { subscriber: { first_name: 'TEST', last_name: 'PERSON', dob: '01/01/2011', member_id: '1234567890' }, provider: { npi: '1234567890' }, payer: { id: 'PRINCIPAL' }, version: 'v2' } }, {
+await client.eligibilities.create({
   timeout: 5 * 1000,
 });
 ```
@@ -169,29 +145,11 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new OnederfulDentistryAPITest();
 
-const response = await client.eligibilities
-  .create({
-    body: {
-      subscriber: { first_name: 'TEST', last_name: 'PERSON', dob: '01/01/2011', member_id: '1234567890' },
-      provider: { npi: '1234567890' },
-      payer: { id: 'PRINCIPAL' },
-      version: 'v2',
-    },
-  })
-  .asResponse();
+const response = await client.eligibilities.create().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: eligibility, response: raw } = await client.eligibilities
-  .create({
-    body: {
-      subscriber: { first_name: 'TEST', last_name: 'PERSON', dob: '01/01/2011', member_id: '1234567890' },
-      provider: { npi: '1234567890' },
-      payer: { id: 'PRINCIPAL' },
-      version: 'v2',
-    },
-  })
-  .withResponse();
+const { data: eligibility, response: raw } = await client.eligibilities.create().withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(eligibility);
 ```
@@ -298,19 +256,9 @@ const client = new OnederfulDentistryAPITest({
 });
 
 // Override per-request:
-await client.eligibilities.create(
-  {
-    body: {
-      subscriber: { first_name: 'TEST', last_name: 'PERSON', dob: '01/01/2011', member_id: '1234567890' },
-      provider: { npi: '1234567890' },
-      payer: { id: 'PRINCIPAL' },
-      version: 'v2',
-    },
-  },
-  {
-    httpAgent: new http.Agent({ keepAlive: false }),
-  },
-);
+await client.eligibilities.create({
+  httpAgent: new http.Agent({ keepAlive: false }),
+});
 ```
 
 ## Semantic versioning
@@ -318,7 +266,7 @@ await client.eligibilities.create(
 This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
 
 1. Changes that only affect static types, without breaking runtime behavior.
-2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals)_.
+2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_
 3. Changes that we do not expect to impact the vast majority of users in practice.
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
