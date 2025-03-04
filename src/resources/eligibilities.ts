@@ -1,14 +1,23 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
+import { isRequestOptions } from '../core';
 import * as Core from '../core';
 
 export class Eligibilities extends APIResource {
   /**
    * Check eligibility
    */
-  create(params: EligibilityCreateParams, options?: Core.RequestOptions): Core.APIPromise<unknown> {
-    const { body, Accept } = params;
+  create(params?: EligibilityCreateParams, options?: Core.RequestOptions): Core.APIPromise<unknown>;
+  create(options?: Core.RequestOptions): Core.APIPromise<unknown>;
+  create(
+    params?: EligibilityCreateParams | Core.RequestOptions,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<unknown> {
+    if (isRequestOptions(params)) {
+      return this.create(undefined, params);
+    }
+    const { body, Accept } = params ?? {};
     return this._client.post('/eligibility', {
       body: body,
       ...options,
@@ -23,7 +32,7 @@ export interface EligibilityCreateParams {
   /**
    * Body param:
    */
-  body: unknown;
+  body?: unknown;
 
   /**
    * Header param:
